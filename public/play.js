@@ -12,7 +12,7 @@ var play_state = {
 
   update: function(){
     //this is the biggest part of the game
-    //if players collide with x, kill x, play a sound, add to score, turn x into x
+    //if players collide with x, kill x, play a sound, add to score, turn x into z
     //if player collides with z, kill z, play a sound, increase score
 
     //x moves randomly left and right
