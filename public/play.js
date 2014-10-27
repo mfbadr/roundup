@@ -10,6 +10,8 @@ var play_state = {
     //add sprites, give them physics, have them collide properly
   },
 
+  //
+
   update: function(){
     //this is the biggest part of the game
     //if players collide with x, kill x, play a sound, add to score, turn x into z
