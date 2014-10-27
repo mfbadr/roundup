@@ -4,6 +4,8 @@ var scoreText;
 var timer;
 var style = {fontSize: '32px', fill: '#000'};
 var seconds = 0;
+var diamond;
+var star;
 
 var playState = {
   //no preload needed
@@ -83,7 +85,7 @@ var playState = {
     stars.enableBody = true;
 
     for(var i = 0; i < 10; i++){
-      var star = stars.create(i * 70, 0, 'star');
+      star = stars.create(i * 70, 0, 'star');
       star.body.gravity.y = 60;
       star.body.bounce.y = 0.7 + Math.random() * 0.2;
       star.body.collideWorldBounds = true;
@@ -138,31 +140,37 @@ var playState = {
 
   collectStar: function(player, star){
 
-  // Removes the star from the screen
-  star.kill();
+    // Removes the star from the screen
+    star.kill();
 
 
-    var diamond = diamonds.create(game.world.randomX, 0, 'diamond');
+    diamond = diamonds.create(game.world.randomX, 0, 'diamond');
     diamond.body.gravity.y = 60;
     diamond.body.bounce.y = 0.7 + Math.random() * 0.2;
     diamond.body.collideWorldBounds = true;
 
+    //collect Diamond Sound
+    this.starSound = game.add.audio('star');
+    this.starSound.play();
 
-  //  Add and update the score
-   //score += 20;
-  //scoreText.text = 'Score: ' + score;
+    //Add and update the score
+    score += 20;
+    scoreText.text = 'Score: ' + score;
 
   },
 
   collectDiamond: function(player, diamond){
 
-// Removes the star from the screen
-  diamond.kill();
+    // Removes the star from the screen
+    diamond.kill();
 
-  //  Add and update the score
-  //score += 40;
-  //scoreText.text = 'Score: ' + score;
+    //collect Diamond Sound
+    this.diamondSound = game.add.audio('diamond');
+    this.diamondSound.play();
 
+    // Add and update the score
+    score += 40;
+    scoreText.text = 'Score: ' + score;
   },
 
   update: function(){
@@ -193,8 +201,9 @@ var playState = {
     //Calling a different function to update the timer just cleans up the update loop if you have other code.
     this.updateTimer();
     //Stops timer when all diamonds are collected
-    //if (yourGroup.countLiving() > 0)
-    //    updateTimer();
+    //if(diamond.countLiving() > 0 && star.countLiving() >= 0){
+    //  this.updateTimer();
+    //}
 
     if (cursors.left.isDown)
     {
