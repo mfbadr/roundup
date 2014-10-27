@@ -74,6 +74,8 @@ var playState = {
     player.animations.add('right', [5, 6, 7, 8], 10, true);
   },
 
+  //
+
   update: function(){
     //this is the biggest part of the game
     //if players collide with x, kill x, play a sound, add to score, turn x into z
