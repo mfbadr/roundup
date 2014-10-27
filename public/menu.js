@@ -10,7 +10,7 @@ var menuState = {
     var x = game.world.width/2, y = game.world.height/2;
     // Adding a text centered on the screen
     var text = this.game.add.text(x, y-0, "Press space to start", style);
-    var text2 = this.game.add.text(x, y-80, "Use <- Left, ^ Up, -> Right Keys", style);
+    var text2 = this.game.add.text(x, y-80, "Use < Left, ^ Up, > Right Keys", style);
     var text3 = this.game.add.text(x, y-40, "to move character", style);
     text.anchor.setTo(0.5, 0.5);
     text2.anchor.setTo(0.5, 0.5);
