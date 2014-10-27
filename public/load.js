@@ -3,10 +3,10 @@ var load_state = {
     //load player spritesheet, x and x images
     //sounds
     //make
-    game.load.image('sky', 'assets/sky.png');
-    game.load.image('ground', 'assets/platform.png');
-    game.load.image('star', 'assets/star.png');
-    game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
+    game.load.image('sky', '/img/sky.png');
+    game.load.image('ground', '/img/platform.png');
+    game.load.image('star', '/img/star.png');
+    game.load.spritesheet('dude', '/img/dude.png', 32, 48);
   },
 
   create: function(){
