@@ -37,7 +37,7 @@ var playState = {
 
     ledge.body.immovable = true;
 
-    ledge = platforms.create(-150, 250, 'ground');
+    ledge = platforms.create(-150, 150, 'ground');
 
     ledge.body.immovable = true;
 
