@@ -1,5 +1,8 @@
+var cursors;
+
 var playState = {
   //no preload needed
+
 
   create: function(){
     //map jump, up down left right to functions that move the player
@@ -67,5 +70,38 @@ var playState = {
 
     //player collision w/ platform
      game.physics.arcade.collide(player, platforms);
+     cursors = game.input.keyboard.createCursorKeys();
+
+     player.body.velocity.x = 0;
+
+    if (cursors.left.isDown)
+    {
+        //  Move to the left
+        player.body.velocity.x = -150;
+
+        player.animations.play('left');
+    }
+    else if (cursors.right.isDown)
+    {
+        //  Move to the right
+        player.body.velocity.x = 150;
+
+        player.animations.play('right');
+    }
+    else
+    {
+        //  Stand still
+        player.animations.stop();
+
+        player.frame = 4;
+    }
+
+    //  Allow the player to jump if they are touching the ground.
+    if (cursors.up.isDown && player.body.touching.down)
+    {
+        player.body.velocity.y = -350;
+    }
+
+
   }
 };
