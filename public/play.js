@@ -35,10 +35,10 @@ var playState = {
     //  Now let's create two ledges
     var ledge = platforms.create(400, 400, 'ground');
     ledge.body.immovable = true;
-    ledge = platforms.create(-150, 150, 'ground');
+    //ledge = platforms.create(-150, 150, 'ground');
+    //ledge.body.immovable = true;
 
     ledge = platforms.create(-150, 400, 'ground');
-
     ledge.body.immovable = true;
 
     ledge = platforms.create(220, 220, 'ground');
@@ -55,7 +55,6 @@ var playState = {
 
 
     ledge = platforms.create(-150, 300, 'ground');
-
     ledge.body.immovable = true;
 
       // The player and its settings
