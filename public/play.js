@@ -87,6 +87,14 @@ var playState = {
     //Add Game Sound
     this.gameSound = game.add.audio('game');
     this.gameSound.play();
+
+    diamonds = game.add.group();
+    diamonds.enableBody = true;
+
+    this.timer = game.time.events.loop(1500, this.moveDiamonds, this);
+
+
+
   },
 
   moveStars: function(){
@@ -105,6 +113,53 @@ var playState = {
     }, this)
   },
 
+  moveDiamonds: function(){
+  //call this on a timer in create
+  //will look like this:
+  //this.timer = game.time.events.loop(1500, this.addRowOfPipes, this);
+
+  diamonds.forEach(function(diamond){
+    var direction = Math.floor(Math.random() + .5);
+
+    if(direction === 1){
+      diamond.body.velocity.x += 100;
+      diamond.body.velocity.y += 100;
+    }else if(direction === 0){
+      diamond.body.velocity.x -= 100;
+      diamond.body.velocity.y -= 100;
+    };
+  }, this)
+},
+
+  collectStar: function(player, star){
+
+  // Removes the star from the screen
+  star.kill();
+
+
+    var diamond = diamonds.create(game.world.randomX, 0, 'diamond');
+    diamond.body.gravity.y = 60;
+    diamond.body.bounce.y = 0.7 + Math.random() * 0.2;
+    diamond.body.collideWorldBounds = true;
+
+
+  //  Add and update the score
+   //score += 20;
+  //scoreText.text = 'Score: ' + score;
+
+  },
+
+  collectDiamond: function(player, diamond){
+
+// Removes the star from the screen
+  diamond.kill();
+
+  //  Add and update the score
+  //score += 40;
+  //scoreText.text = 'Score: ' + score;
+
+  },
+
   update: function(){
     //this is the biggest part of the game
     //if players collide with x, kill x, play a sound, add to score, turn x into z
@@ -117,6 +172,12 @@ var playState = {
     //if timer reaches zero, play and animation and return to menu
     //stars collide with platforms
     game.physics.arcade.collide(stars, platforms)
+    game.physics.arcade.collide(diamonds, platforms)
+    game.physics.arcade.collide(stars, diamonds)
+
+    game.physics.arcade.overlap(player, stars, this.collectStar, null, this);
+    game.physics.arcade.overlap(player, diamonds, this.collectDiamond, null, this);
+
 
     //player collision w/ platform
     game.physics.arcade.collide(player, platforms);
@@ -153,4 +214,5 @@ var playState = {
       this.jumpSound.play();
     }
   }
+
 };
