@@ -16,10 +16,10 @@ var menuState = {
     text2.anchor.setTo(0.5, 0.5);
     text3.anchor.setTo(0.5, 0.5);
     // If the user already played
-    if (score > 0) {
-        // Display its score
-        var scoreLabel = this.game.add.text(x, y+50, "score: " + score, style);
-        scoreLabel.anchor.setTo(0.5, 0.5); 
+    if(score > 0){
+      // Display its score
+      var scoreText = this.game.add.text(x, y+50, "score: " + score, style);
+      scoreText.anchor.setTo(0.5, 0.5); 
     }
   },
   // Start the actual game

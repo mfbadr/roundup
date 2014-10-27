@@ -1,9 +1,12 @@
 var cursors;
+var score = 0;
+var scoreText;
+var timer;
+var style = {fontSize: '32px', fill: '#000'};
+var seconds = 0;
 
 var playState = {
   //no preload needed
-
-
   create: function(){
     //map jump, up down left right to functions that move the player
     //create groups for ledges, X, Z
@@ -16,6 +19,9 @@ var playState = {
 
     //  A simple background for our game
     game.add.sprite(0, 0, 'sky');
+
+    //timer
+    timer = game.add.text(16, 40, style);
 
     //  The platforms group contains the ground and the 2 ledges we can jump on
     platforms = game.add.group();
@@ -83,10 +89,12 @@ var playState = {
       star.body.collideWorldBounds = true;
     };
 
-    this.timer = game.time.events.loop(1500, this.moveStars, this);
+    this.starTimer = game.time.events.loop(1500, this.moveStars, this);
     //Add Game Sound
     this.gameSound = game.add.audio('game');
     this.gameSound.play();
+
+    scoreText = game.add.text(16, 16, 'score: 0', style);
   },
 
   moveStars: function(){
@@ -124,6 +132,12 @@ var playState = {
 
     player.body.velocity.x = 0;
 
+    //Calling a different function to update the timer just cleans up the update loop if you have other code.
+    this.updateTimer();
+    //Stops timer when all diamonds are collected
+    //if (yourGroup.countLiving() > 0)
+    //    updateTimer();
+
     if (cursors.left.isDown)
     {
         //  Move to the left
@@ -152,5 +166,22 @@ var playState = {
       this.jumpSound = game.add.audio('jump');
       this.jumpSound.play();
     }
-  }
+  },
+
+  updateTimer: function(){
+    seconds = 60;
+    seconds -= Math.floor(game.time.time / 1000) % 60;
+ 
+    //If any of the digits becomes a single digit number, pad it with a zero
+ 
+    if (seconds < 10)
+      seconds = '0' + seconds;
+ 
+    timer.setText('time: ' + seconds);
+
+    //if(seconds < 1);
+    //{
+    //  game.state.start('menu');
+    //} 
+  },
 };
