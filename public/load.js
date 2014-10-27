@@ -1,4 +1,4 @@
-var load_state = {
+var loadState = {
   preload: function(){
     //load player spritesheet, x and x images
     //sounds
@@ -6,6 +6,7 @@ var load_state = {
     game.load.image('sky', '/img/sky.png');
     game.load.image('ground', '/img/platform.png');
     game.load.image('star', '/img/star.png');
+    game.load.image('diamond', '/img/diamond.png');
     game.load.spritesheet('dude', '/img/dude.png', 32, 48);
   },
 

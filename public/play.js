@@ -1,4 +1,4 @@
-var play_state = {
+var playState = {
   //no preload needed
 
   create: function(){
