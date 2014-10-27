@@ -36,6 +36,26 @@ var playState = {
     var ledge = platforms.create(400, 400, 'ground');
     ledge.body.immovable = true;
     ledge = platforms.create(-150, 150, 'ground');
+
+    ledge = platforms.create(-150, 400, 'ground');
+
+    ledge.body.immovable = true;
+
+    ledge = platforms.create(220, 220, 'ground');
+    ledge.body.immovable = true;
+    ledge.scale.setTo(.3,1);
+
+    ledge = platforms.create(50, 150, 'ground');
+    ledge.body.immovable = true;
+    ledge.scale.setTo(.3,3);
+
+    ledge = platforms.create(390, 100, 'ground');
+    ledge.body.immovable = true;
+    ledge.scale.setTo(.3,2);
+
+
+    ledge = platforms.create(-150, 300, 'ground');
+
     ledge.body.immovable = true;
 
       // The player and its settings
