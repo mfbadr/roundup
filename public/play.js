@@ -84,6 +84,9 @@ var playState = {
     };
 
     this.timer = game.time.events.loop(1500, this.moveStars, this);
+    //Add Game Sound
+    this.gameSound = game.add.audio('game');
+    this.gameSound.play();
   },
 
   moveStars: function(){
@@ -142,9 +145,12 @@ var playState = {
         player.frame = 4;
     }
     //  Allow the player to jump if they are touching the ground.
-    if (cursors.up.isDown && player.body.touching.down)
+    if(cursors.up.isDown && player.body.touching.down)
     {
-        player.body.velocity.y = -350;
+      player.body.velocity.y = -350;
+      //Add Game Sound
+      this.jumpSound = game.add.audio('jump');
+      this.jumpSound.play();
     }
   }
 };
