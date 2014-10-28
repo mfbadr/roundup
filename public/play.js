@@ -10,10 +10,14 @@ var star;
 var playState = {
   //no preload needed
   create: function(){
+
+    score = 0;
+    seconds = 30;
     //map jump, up down left right to functions that move the player
     //create groups for ledges, X, Z
 
     //create timer for countdown
+    this.gameTimer = game.time.events.loop(1000, this.updateTimer, this);
 
     //add sprites, give them physics, have them collide properly
      //  We're going to be using physics, so enable the Arcade Physics system
@@ -91,7 +95,7 @@ var playState = {
       star.body.collideWorldBounds = true;
     };
 
-    this.starTimer = game.time.events.loop(1500, this.moveStars, this);
+    this.moveTimer = game.time.events.loop(1500, this.moveItems, this);
     //Add Game Sound
     this.gameSound = game.add.audio('game');
     this.gameSound.play();
@@ -101,10 +105,9 @@ var playState = {
     diamonds = game.add.group();
     diamonds.enableBody = true;
 
-    this.timer = game.time.events.loop(1500, this.moveDiamonds, this);
   },
 
-  moveStars: function(){
+  moveItems: function(){
     //call this on a timer in create
     //will look like this:
     //this.timer = game.time.events.loop(1500, this.addRowOfPipes, this);
@@ -118,45 +121,39 @@ var playState = {
         star.body.velocity.x -= 100;
       };
     }, this)
+
+    diamonds.forEach(function(diamond){
+      var direction = Math.floor(Math.random() + .5);
+
+      if(direction === 1){
+        diamond.body.velocity.x += 100;
+        diamond.body.velocity.y += 100;
+      }else if(direction === 0){
+        diamond.body.velocity.x -= 100;
+        diamond.body.velocity.y -= 100;
+      };
+    }, this)
   },
-
-  moveDiamonds: function(){
-  //call this on a timer in create
-  //will look like this:
-  //this.timer = game.time.events.loop(1500, this.addRowOfPipes, this);
-
-  diamonds.forEach(function(diamond){
-    var direction = Math.floor(Math.random() + .5);
-
-    if(direction === 1){
-      diamond.body.velocity.x += 100;
-      diamond.body.velocity.y += 100;
-    }else if(direction === 0){
-      diamond.body.velocity.x -= 100;
-      diamond.body.velocity.y -= 100;
-    };
-  }, this)
-},
 
   collectStar: function(player, star){
 
     // Removes the star from the screen
     star.kill();
-
+    score += 20;
+    scoreText.setText('Score: ' + score);
 
     diamond = diamonds.create(game.world.randomX, 0, 'diamond');
     diamond.body.gravity.y = 60;
     diamond.body.bounce.y = 0.7 + Math.random() * 0.2;
     diamond.body.collideWorldBounds = true;
 
-    //collect Diamond Sound
+    //collect Star Sound
     this.starSound = game.add.audio('star');
     this.starSound.play();
 
     //Add and update the score
     score += 20;
     scoreText.text = 'Score: ' + score;
-
   },
 
   collectDiamond: function(player, diamond){
@@ -170,7 +167,14 @@ var playState = {
 
     // Add and update the score
     score += 40;
-    scoreText.text = 'Score: ' + score;
+    scoreText.setText('Score: ' + score);
+
+    // Check for Diamonds
+    if(this.diamond <= 0)
+    {
+      this.gameSound.stop();
+      game.state.start('menu');
+    }
   },
 
   update: function(){
@@ -191,39 +195,28 @@ var playState = {
     game.physics.arcade.overlap(player, stars, this.collectStar, null, this);
     game.physics.arcade.overlap(player, diamonds, this.collectDiamond, null, this);
 
-
     //player collision w/ platform
     game.physics.arcade.collide(player, platforms);
     cursors = game.input.keyboard.createCursorKeys();
 
     player.body.velocity.x = 0;
-
-    //Calling a different function to update the timer just cleans up the update loop if you have other code.
-    this.updateTimer();
-    //Stops timer when all diamonds are collected
-    //if(diamond.countLiving() > 0 && star.countLiving() >= 0){
-    //  this.updateTimer();
-    //}
-
     if (cursors.left.isDown)
     {
-        //  Move to the left
-        player.body.velocity.x = -150;
-
-        player.animations.play('left');
+      //  Move to the left
+      player.body.velocity.x = -150;
+      player.animations.play('left');
     }
     else if (cursors.right.isDown)
     {
-        //  Move to the right
-        player.body.velocity.x = 150;
-
-        player.animations.play('right');
+      //  Move to the right
+      player.body.velocity.x = 150;
+      player.animations.play('right');
     }
     else
     {
-        //  Stand still
-        player.animations.stop();
-        player.frame = 4;
+      //  Stand still
+      player.animations.stop();
+      player.frame = 4;
     }
     //  Allow the player to jump if they are touching the ground.
     if(cursors.up.isDown && player.body.touching.down)
@@ -236,19 +229,13 @@ var playState = {
   },
 
   updateTimer: function(){
-    seconds = 60;
-    seconds -= Math.floor(game.time.time / 1000) % 60;
-
-    //If any of the digits becomes a single digit number, pad it with a zero
-
-    if (seconds < 10)
-      seconds = '0' + seconds;
-
+    seconds -= 1;
     timer.setText('time: ' + seconds);
 
-    //if(seconds < 1);
-    //{
-    //  game.state.start('menu');
-    //}
+    if(seconds === 0)
+    {
+      this.gameSound.stop();
+      game.state.start('menu');
+    }
   }
 };

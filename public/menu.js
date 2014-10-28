@@ -1,10 +1,10 @@
 var b;
-var menuState = {  
+var menuState = {
   create: function(){
     b = game.add.tileSprite(0, 0, 600, 600, 'sky');
     // Call the 'start' function when pressing the spacebar
     var spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    spaceKey.onDown.add(this.start, this); 
+    spaceKey.onDown.add(this.start, this);
     // Defining variables
     var style = {font: "30px Arial", fill: "#ffffff"};
     var x = game.world.width/2, y = game.world.height/2;
@@ -18,8 +18,8 @@ var menuState = {
     // If the user already played
     if(score > 0){
       // Display its score
-      var scoreText = this.game.add.text(x, y+50, "score: " + score, style);
-      scoreText.anchor.setTo(0.5, 0.5); 
+      var scoreText = this.game.add.text(x, y+50, "Last score: " + score, style);
+      scoreText.anchor.setTo(0.5, 0.5);
     }
   },
   // Start the actual game
