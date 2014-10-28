@@ -13,7 +13,7 @@ var loadState = {
     //Load in the jump sound
     game.load.audio('jump', 'assets/audio/SoundEffects/alien_death1.wav');
     //Sound for Stars
-    game.load.audio('stars', 'assets/audio/SoundEffects/key.wav');
+    game.load.audio('star', 'assets/audio/SoundEffects/key.wav');
     //Sound for Diamonds
     game.load.audio('diamond', 'assets/audio/SoundEffects/p-ping.mp3')
   },

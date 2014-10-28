@@ -146,6 +146,8 @@ var playState = {
     diamond.body.bounce.y = 0.7 + Math.random() * 0.2;
     diamond.body.collideWorldBounds = true;
 
+    this.starSound = game.add.audio('star');
+    this.starSound.play();
 
   //  Add and update the score
    score += 20;
@@ -159,6 +161,9 @@ var playState = {
     diamond.kill();
     score += 40;
     scoreText.setText('Score: ' + score);
+
+    this.diamondSound = game.add.audio('diamond');
+    this.diamondSound.play();
 
   //  Add and update the score
   score += 40;
