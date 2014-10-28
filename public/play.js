@@ -106,12 +106,13 @@ var playState = {
     diamonds = game.add.group();
     diamonds.enableBody = true;
 
+    this.emitter = game.add.emitter(0, 0, 100);
+    this.emitter.makeParticles('star');
   },
 
   moveItems: function(){
     //call this on a timer in create
     //will look like this:
-    //this.timer = game.time.events.loop(1500, this.addRowOfPipes, this);
 
     stars.forEach(function(star){
       var direction = Math.floor(Math.random() + .5);
@@ -155,6 +156,12 @@ var playState = {
     //Add and update the score
     score += 20;
     scoreText.text = 'Score: ' + score;
+
+    var x = Math.floor(Math.random() * 600 - 32),
+        y = Math.floor(Math.random() * 600 - 90);
+    this.emitter.x = x;
+    this.emitter.y = y;
+    this.emitter.start(true, 2000, null, 10);
   },
 
   collectDiamond: function(player, diamond){
