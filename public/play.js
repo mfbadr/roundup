@@ -28,6 +28,7 @@ var playState = {
 
     //timer
     timer = game.add.text(16, 40, style);
+    timer.setText('time: 30');
 
     //  The platforms group contains the ground and the 2 ledges we can jump on
     platforms = game.add.group();
@@ -158,7 +159,7 @@ var playState = {
 
   collectDiamond: function(player, diamond){
 
-    // Removes the star from the screen
+    //Removes the star from the screen
     diamond.kill();
 
     //collect Diamond Sound
