@@ -149,8 +149,8 @@ var playState = {
 
 
   //  Add and update the score
-   //score += 20;
-  //scoreText.text = 'Score: ' + score;
+   score += 20;
+  scoreText.text = 'Score: ' + score;
 
   },
 
@@ -160,8 +160,8 @@ var playState = {
   diamond.kill();
 
   //  Add and update the score
-  //score += 40;
-  //scoreText.text = 'Score: ' + score;
+  score += 40;
+  scoreText.text = 'Score: ' + score;
 
   },
 
