@@ -8,10 +8,14 @@ var seconds = 0;
 var playState = {
   //no preload needed
   create: function(){
+
+    score = 0;
+    seconds = 30;
     //map jump, up down left right to functions that move the player
     //create groups for ledges, X, Z
 
     //create timer for countdown
+    this.gameTimer = game.time.events.loop(1000, this.updateTimer, this);
 
     //add sprites, give them physics, have them collide properly
      //  We're going to be using physics, so enable the Arcade Physics system
@@ -89,7 +93,7 @@ var playState = {
       star.body.collideWorldBounds = true;
     };
 
-    this.starTimer = game.time.events.loop(1500, this.moveStars, this);
+    this.moveTimer = game.time.events.loop(1500, this.moveItems, this);
     //Add Game Sound
     this.gameSound = game.add.audio('game');
     this.gameSound.play();
@@ -99,10 +103,9 @@ var playState = {
     diamonds = game.add.group();
     diamonds.enableBody = true;
 
-    this.timer = game.time.events.loop(1500, this.moveDiamonds, this);
   },
 
-  moveStars: function(){
+  moveItems: function(){
     //call this on a timer in create
     //will look like this:
     //this.timer = game.time.events.loop(1500, this.addRowOfPipes, this);
@@ -116,30 +119,26 @@ var playState = {
         star.body.velocity.x -= 100;
       };
     }, this)
+
+    diamonds.forEach(function(diamond){
+      var direction = Math.floor(Math.random() + .5);
+
+      if(direction === 1){
+        diamond.body.velocity.x += 100;
+        diamond.body.velocity.y += 100;
+      }else if(direction === 0){
+        diamond.body.velocity.x -= 100;
+        diamond.body.velocity.y -= 100;
+      };
+    }, this)
   },
-
-  moveDiamonds: function(){
-  //call this on a timer in create
-  //will look like this:
-  //this.timer = game.time.events.loop(1500, this.addRowOfPipes, this);
-
-  diamonds.forEach(function(diamond){
-    var direction = Math.floor(Math.random() + .5);
-
-    if(direction === 1){
-      diamond.body.velocity.x += 100;
-      diamond.body.velocity.y += 100;
-    }else if(direction === 0){
-      diamond.body.velocity.x -= 100;
-      diamond.body.velocity.y -= 100;
-    };
-  }, this)
-},
 
   collectStar: function(player, star){
 
   // Removes the star from the screen
-  star.kill();
+    star.kill();
+    score += 20;
+    scoreText.setText('Score: ' + score);
 
 
     var diamond = diamonds.create(game.world.randomX, 0, 'diamond');
@@ -157,7 +156,9 @@ var playState = {
   collectDiamond: function(player, diamond){
 
 // Removes the star from the screen
-  diamond.kill();
+    diamond.kill();
+    score += 40;
+    scoreText.setText('Score: ' + score);
 
   //  Add and update the score
   //score += 40;
@@ -191,7 +192,7 @@ var playState = {
     player.body.velocity.x = 0;
 
     //Calling a different function to update the timer just cleans up the update loop if you have other code.
-    this.updateTimer();
+    //this.updateTimer();
     //Stops timer when all diamonds are collected
     //if (yourGroup.countLiving() > 0)
     //    updateTimer();
@@ -227,15 +228,15 @@ var playState = {
   },
 
   updateTimer: function(){
-    seconds = 60;
-    seconds -= Math.floor(game.time.time / 1000) % 60;
+    seconds -= 1;
+    timer.setText('time: ' + seconds);
 
     //If any of the digits becomes a single digit number, pad it with a zero
 
-    if (seconds < 10)
-      seconds = '0' + seconds;
+    if (seconds === 0)
+      game.state.start('menu');
 
-    timer.setText('time: ' + seconds);
+    //timer.setText('time: ' + seconds);
 
     //if(seconds < 1);
     //{
